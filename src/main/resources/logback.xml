@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="false">
+
+    <!--    conversionWord 定义需要的装换符-->
+    <!--    <conversionRule conversionWord="m" converterClass="com.yuantu.frontgateway.web.core.config.SensitiveConverterConfig"/>-->
+
+
+    <!--        <springProperty  name="log_home" source="logging.file.path" scope="context" />-->
+    <!--        <springProperty  name="log_pattern" source="logging.pattern" scope="context" />-->
+    <!--        <springProperty  name="log_level" source="logging.level.frontgateway" scope="context" />-->
+    <!--        <springProperty  name="log_file_size" source="logging.file.max-history" scope="context" />-->
+    <!--        <springProperty  name="log_file_history" source="logging.file.max-size" scope="context" />-->
+
+    <property name="log_home" value="logs"/>
+    <property name="log_level" value="INFO"/>
+    <property name="log_pattern" value="[%p] [%d{yyyy-MM-dd HH:mm:ss}] [%X{SOFA-TraceId},%X{SOFA-SpanId}] [%c] %m%n"/>
+    <property name="log_file_size" value="1MB"/>
+    <!--要保留的对应的日志文件数量-->
+    <property name="log_file_history" value="360"/>
+
+
+    <!--控制台输出appender-->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <!--设置输出格式-->
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符-->
+            <pattern>${log_pattern}</pattern>
+            <!--设置编码-->
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <!--网关出入参日志-->
+    <appender name="Gateway" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--日志名,指定最新的文件名，其他文件名使用fileNamePattern -->
+        <file>${log_home}/gateway.log</file>
+        <!--文件滚动模式-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${log_home}/%d{yyyy-MM,aux}/gateway.log.%d{yyyy-MM-dd}-%i</fileNamePattern>
+            <!--日志保留天数-->
+            <maxHistory>${log_file_history}</maxHistory>
+            <!--日志文件分割容量-->
+            <maxFileSize>${log_file_size}</maxFileSize>
+            <cleanHistoryOnStart>true</cleanHistoryOnStart>
+            <!--日志总容量限制-->
+            <totalSizeCap>70GB</totalSizeCap>
+        </rollingPolicy>
+        <!--输出格式-->
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${log_pattern}</pattern>
+            <!--设置编码-->
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <!--网关其它日志 杂七杂八的日志都丢到这里-->
+    <appender name="All" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--日志名,指定最新的文件名，其他文件名使用fileNamePattern -->
+        <file>${log_home}/all.log</file>
+        <!--文件滚动模式-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${log_home}/%d{yyyy-MM,aux}/all.log.%d{yyyy-MM-dd}-%i</fileNamePattern>
+            <!--日志保留天数-->
+            <maxHistory>${log_file_history}</maxHistory>
+            <cleanHistoryOnStart>true</cleanHistoryOnStart>
+            <!--日志文件分割容量-->
+            <maxFileSize>${log_file_size}</maxFileSize>
+            <!--日志总容量限制-->
+            <totalSizeCap>10GB</totalSizeCap>
+        </rollingPolicy>
+        <!--输出格式-->
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${log_pattern}</pattern>
+            <!--设置编码-->
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <!--业务请求日志-->
+    <appender name="Webparam" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--日志名,指定最新的文件名，其他文件名使用fileNamePattern -->
+        <file>${log_home}/webparam.log</file>
+        <!--文件滚动模式-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${log_home}/%d{yyyy-MM,aux}/webparam.log.%d{yyyy-MM-dd}-%i</fileNamePattern>
+            <!--日志保留天数-->
+            <maxHistory>${log_file_history}</maxHistory>
+            <cleanHistoryOnStart>true</cleanHistoryOnStart>
+            <!--日志文件分割容量-->
+            <maxFileSize>${log_file_size}</maxFileSize>
+            <!--日志总容量限制-->
+            <totalSizeCap>70GB</totalSizeCap>
+        </rollingPolicy>
+        <!--输出格式-->
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${log_pattern}</pattern>
+            <!--设置编码-->
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <!--业务层请求日志-->
+    <appender name="Biz" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--日志名,指定最新的文件名，其他文件名使用fileNamePattern -->
+        <file>${log_home}/biz.log</file>
+        <!--文件滚动模式-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${log_home}/%d{yyyy-MM,aux}/biz.log.%d{yyyy-MM-dd}-%i</fileNamePattern>
+            <!--日志保留天数-->
+            <maxHistory>60</maxHistory>
+            <cleanHistoryOnStart>true</cleanHistoryOnStart>
+            <!--日志文件分割容量-->
+            <maxFileSize>${log_file_size}</maxFileSize>
+            <!--日志总容量限制-->
+            <totalSizeCap>5GB</totalSizeCap>
+        </rollingPolicy>
+        <!--输出格式-->
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${log_pattern}</pattern>
+            <!--设置编码-->
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <!--大日志记录 一般是批量或轮询的接口-->
+    <appender name="Large" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--日志名,指定最新的文件名，其他文件名使用fileNamePattern -->
+        <file>${log_home}/large.log</file>
+        <!--文件滚动模式-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${log_home}/%d{yyyy-MM,aux}/large.log.%d{yyyy-MM-dd}-%i</fileNamePattern>
+            <!--日志保留天数-->
+            <maxHistory>7</maxHistory>
+            <!--日志文件分割容量-->
+            <maxFileSize>${log_file_size}</maxFileSize>
+            <cleanHistoryOnStart>true</cleanHistoryOnStart>
+            <!--日志总容量限制-->
+            <totalSizeCap>5GB</totalSizeCap>
+        </rollingPolicy>
+        <!--输出格式-->
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${log_pattern}</pattern>
+            <!--设置编码-->
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <!--sql记录-->
+    <appender name="Sql" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--日志名,指定最新的文件名，其他文件名使用fileNamePattern -->
+        <file>${log_home}/sql.log</file>
+        <!--文件滚动模式-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${log_home}/%d{yyyy-MM,aux}/sql.log.%d{yyyy-MM-dd}-%i</fileNamePattern>
+            <!--日志保留天数-->
+            <maxHistory>30</maxHistory>
+            <!--日志文件分割容量-->
+            <maxFileSize>${log_file_size}</maxFileSize>
+            <cleanHistoryOnStart>true</cleanHistoryOnStart>
+            <!--日志总容量限制-->
+            <totalSizeCap>5GB</totalSizeCap>
+        </rollingPolicy>
+        <!--输出格式-->
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${log_pattern}</pattern>
+            <!--设置编码-->
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <!--数据总线记录-->
+    <appender name="Bus" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--日志名,指定最新的文件名，其他文件名使用fileNamePattern -->
+        <file>${log_home}/bus.log</file>
+        <!--文件滚动模式-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${log_home}/%d{yyyy-MM,aux}/bus.log.%d{yyyy-MM-dd}-%i</fileNamePattern>
+            <!--日志保留天数-->
+            <maxHistory>15</maxHistory>
+            <!--日志文件分割容量-->
+            <maxFileSize>${log_file_size}</maxFileSize>
+            <cleanHistoryOnStart>true</cleanHistoryOnStart>
+            <!--日志总容量限制-->
+            <totalSizeCap>5GB</totalSizeCap>
+        </rollingPolicy>
+        <!--输出格式-->
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${log_pattern}</pattern>
+            <!--设置编码-->
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <!--定时任务记录-->
+    <appender name="Job" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--日志名,指定最新的文件名，其他文件名使用fileNamePattern -->
+        <file>${log_home}/job.log</file>
+        <!--文件滚动模式-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${log_home}/%d{yyyy-MM,aux}/job.log.%d{yyyy-MM-dd}-%i</fileNamePattern>
+            <!--日志保留天数-->
+            <maxHistory>30</maxHistory>
+            <!--日志文件分割容量-->
+            <maxFileSize>${log_file_size}</maxFileSize>
+            <cleanHistoryOnStart>true</cleanHistoryOnStart>
+            <!--日志总容量限制-->
+            <totalSizeCap>5GB</totalSizeCap>
+        </rollingPolicy>
+        <!--输出格式-->
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${log_pattern}</pattern>
+            <!--设置编码-->
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <!--sea monitor记录-->
+    <appender name="Sea" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--日志名,指定最新的文件名，其他文件名使用fileNamePattern -->
+        <file>${log_home}/sea.log</file>
+        <!--文件滚动模式-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${log_home}/%d{yyyy-MM,aux}/sea.log.%d{yyyy-MM-dd}-%i</fileNamePattern>
+            <!--日志保留天数-->
+            <maxHistory>3</maxHistory>
+            <!--日志文件分割容量-->
+            <maxFileSize>${log_file_size}</maxFileSize>
+            <cleanHistoryOnStart>true</cleanHistoryOnStart>
+            <!--日志总容量限制-->
+            <totalSizeCap>5GB</totalSizeCap>
+        </rollingPolicy>
+        <!--输出格式-->
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${log_pattern}</pattern>
+            <!--设置编码-->
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <appender name="planJob" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--日志名,指定最新的文件名，其他文件名使用fileNamePattern -->
+        <file>${log_home}/planJob.log</file>
+        <!--文件滚动模式-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${log_home}/%d{yyyy-MM,aux}/planJob.log.%d{yyyy-MM-dd}-%i</fileNamePattern>
+            <!--日志保留天数-->
+            <maxHistory>1</maxHistory>
+            <!--日志文件分割容量-->
+            <maxFileSize>${log_file_size}</maxFileSize>
+            <cleanHistoryOnStart>true</cleanHistoryOnStart>
+            <!--日志总容量限制-->
+            <!--<totalSizeCap>20GB</totalSizeCap>-->
+        </rollingPolicy>
+        <!--输出格式-->
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${log_pattern}</pattern>
+            <!--设置编码-->
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+
+    <!--指定基础的日志输出级别-->
+    <root level="${log_level}">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="All"/>
+    </root>
+
+    <logger name="gateway" level="${log_level}" additivity="false">
+        <appender-ref ref="Gateway"/>
+    </logger>
+
+    <logger name="webparams" level="${log_level}" additivity="false">
+        <appender-ref ref="Webparam"/>
+    </logger>
+
+    <logger name="biz" level="${log_level}" additivity="false">
+        <appender-ref ref="Biz"/>
+    </logger>
+
+    <logger name="large" level="${log_level}" additivity="false">
+        <appender-ref ref="Large"/>
+    </logger>
+
+    <logger name="bus" level="${log_level}" additivity="false">
+        <appender-ref ref="Bus"/>
+    </logger>
+
+    <logger name="job" level="${log_level}" additivity="false">
+        <appender-ref ref="Job"/>
+    </logger>
+
+    <logger name="cn.com.hellowood.dynamicdatasource.mapper" level="DEBUG" additivity="false">
+        <appender-ref ref="Sql"/>
+    </logger>
+
+    <logger name="com.github.spy.sea" level="${log_level}" additivity="false">
+        <appender-ref ref="Sea"/>
+    </logger>
+
+    <logger name="com.yuantu.plancenter" level="INFO" additivity="false">
+        <appender-ref ref="planJob"/>
+    </logger>
+
+</configuration>

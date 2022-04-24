@@ -1,5 +1,6 @@
 package cn.com.hellowood.dynamicdatasource.configuration;
 
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
@@ -18,8 +19,13 @@ import org.springframework.stereotype.Component;
  */
 @Aspect
 @Component
+@Slf4j(topic = "webparams")
 public class DynamicDataSourceAspect {
+    /**
+     * @Slf4j(topic = "webparams") 表示默认日志对象是 log
+     */
     private static final Logger logger = LoggerFactory.getLogger(DynamicDataSourceAspect.class);
+
 
     private final String[] QUERY_PREFIX = {"get"};
 
@@ -40,6 +46,9 @@ public class DynamicDataSourceAspect {
         Boolean isQueryMethod = isQueryMethod(point.getSignature().getName());
         if (isQueryMethod) {
             DynamicDataSourceContextHolder.useSlaveDataSource();
+            logger.info("Switch DataSource to [{}] in Method [{}]",
+                    DynamicDataSourceContextHolder.getDataSourceKey(), point.getSignature());
+            //自定义的日志对象
             logger.debug("Switch DataSource to [{}] in Method [{}]",
                     DynamicDataSourceContextHolder.getDataSourceKey(), point.getSignature());
         }
