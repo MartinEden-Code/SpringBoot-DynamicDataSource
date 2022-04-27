@@ -56,7 +56,7 @@ public class DynamicDataSourceAspect {
 
     /**
      * Restore DataSource
-     *
+     * 使用后需要清楚当前使用的数据源（todo 原因：当方法执行完成或异常时，需要从ThreadLocal中移除切换记录，否则可能会影响别的不显示声明切换数据源的地方获取到错误的数据源，并且我们也需要保证ThreadLocal的remove方法被调用，这在多次切换数据源的情况下就会出问题。 ）
      * @param point the point
      */
     @After("daoAspect()")
