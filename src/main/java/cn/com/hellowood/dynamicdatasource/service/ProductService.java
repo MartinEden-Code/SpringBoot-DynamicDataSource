@@ -92,7 +92,7 @@ public class ProductService {
 
     /**
      * Get all product
-     *
+     * todo 在该应用中因为使用了 DAO 层的切面切换数据源，所以 @Transactional 注解不能加在类上，只能用于方法；有 @Trasactional注解的方法无法切换数据源
      * @return
      */
     public List<Product> getAllProduct() {
