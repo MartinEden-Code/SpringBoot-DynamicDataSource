@@ -21,8 +21,15 @@ public class DynamicDataSourceContextHolder {
 
     private static final Logger logger = LoggerFactory.getLogger(DynamicDataSourceContextHolder.class);
 
+    /**
+     * 用于在切换数据源时保证不会被其他线程修改
+     * todo ThreadLocal是线程安全的，并且不能在多线程之间共享。为什么还需要额外加锁？
+     */
     private static Lock lock = new ReentrantLock();
 
+    /**
+     * 用于轮循的计数器
+     */
     private static int counter = 0;
 
     /**
