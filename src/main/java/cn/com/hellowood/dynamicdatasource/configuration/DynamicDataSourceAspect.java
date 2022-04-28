@@ -22,7 +22,8 @@ public class DynamicDataSourceAspect {
 
     /**
      * Switch DataSource
-     *
+     * //todo 在实际项目中如果使用注解的方式挨个标记并不是合理的方式，而且局限性太大，一个方法中可能既有查询又有写入，所以无法很好的实现读写分离；更好的方式是通过 AOP 切持久层接口，通过接口的方法名来判断应当使用哪种数据源，不过该方式要求使用统一的命名方式
+     * // todo 上面的切面注解@targetDataSource是放到controller层中
      * @param point
      * @param targetDataSource
      */
