@@ -25,6 +25,8 @@ public class DynamicDataSourceAspect {
 
     /**
      * Dao aspect.
+     * todo 需要注意的是，考虑到在一个 Service 中同时会有读和写的操作，所以本应用是通过 AOP 切 DAO 层实现数据源切换，
+     *  但是当切向 DAO 层后不能开启事务，否则无法在 DAO 层切换数据源；如果切面切向 Service 层，不会和事务冲突
      */
     @Pointcut("execution( * cn.com.hellowood.dynamicdatasource.mapper.*.*(..))")
     public void daoAspect() {
