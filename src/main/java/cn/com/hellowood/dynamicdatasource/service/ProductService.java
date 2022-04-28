@@ -11,7 +11,8 @@ import java.util.List;
 
 /**
  * Product service for handler logic of product operation
- *
+ * //todo 需要注意的是，使用 DAO 层切面后不应该在 Service 类层面上加 @Transactional 注解，而应该添加在方法上，这也是 Spring 推荐的做法
+ *    但如果使用controller层切面，建议在service类层面上加上transation注解
  * @author HelloWood
  * @date 2017-07-11 11:58
  * @Email hellowoodes@gmail.com

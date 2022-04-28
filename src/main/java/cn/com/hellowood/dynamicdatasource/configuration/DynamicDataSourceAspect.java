@@ -25,6 +25,8 @@ public class DynamicDataSourceAspect {
 
     /**
      * Dao aspect.
+     * todo 使用 DAO 层切面后不应该在 Service 类层面上加 @Transactional 注解，而应该添加在方法上，这也是 Spring 推荐的做法
+     *     但如果使用controller层切面，建议在service类层面上加上transation注解
      */
     @Pointcut("execution( * cn.com.hellowood.dynamicdatasource.mapper.*.*(..))")
     public void daoAspect() {
