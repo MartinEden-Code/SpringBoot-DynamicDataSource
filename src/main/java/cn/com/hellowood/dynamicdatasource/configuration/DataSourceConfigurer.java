@@ -82,6 +82,12 @@ public class DataSourceConfigurer {
     @ConfigurationProperties(prefix = "mybatis")
     public SqlSessionFactoryBean sqlSessionFactoryBean() {
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
+
+
+        //todo 如果 application.properties 里没有进行 mybatis需要 则需要以下代码进行配置 MyBatis
+        /*sqlSessionFactoryBean.setTypeAliasesPackage("cn.com.hellowood.dynamicdatasource.mapper");
+        sqlSessionFactoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("mappers/**Mapper.xml"));*/
+
         // Here is very important, if don't config this, will can't switch datasource
         // put all datasource into SqlSessionFactoryBean, then will autoconfig SqlSessionFactory
         sqlSessionFactoryBean.setDataSource(dynamicDataSource());
